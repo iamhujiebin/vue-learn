@@ -26,7 +26,7 @@ module.exports = {
     extensions: ['.js', '.vue', '.json'],//指定寻找文件的后缀,所以import的时候就不需要后缀的
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
-      //'@': resolve('src'),
+      //'@': resolve('src'),//这里是别名，@代表src的路径。其实没必要，所以注释掉了
     }
   },
   module: {
