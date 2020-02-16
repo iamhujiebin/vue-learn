@@ -1,8 +1,9 @@
 <template>
     <div>
       这是商品列表
-      <span>{{$route.params.goodsId}}</span>
-      <span>{{$route.params.userId}}</span>
+      <router-link to="/goods/title">点击商品title</router-link>
+      <router-link to="/goods/img">点击商品image</router-link>
+      <router-view></router-view>
     </div>
 </template>
 
