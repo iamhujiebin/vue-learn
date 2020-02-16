@@ -45,7 +45,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 10000,//小于它的都进行base64
           name: utils.assetsPath('img/[name].[hash:7].[ext]')//这里说明要对图片进行base64
         }
       },
