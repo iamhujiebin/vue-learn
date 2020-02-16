@@ -23,7 +23,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json'],//指定寻找文件的后缀,所以import的时候就不需要后缀的
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       //'@': resolve('src'),
