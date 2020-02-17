@@ -15,16 +15,16 @@
               <use xlink:href="#icon-arrow-short"></use>
             </svg>
           </a>
-          <a href="javascript:void(0)" class="filterby stopPop">Filter by</a>
+          <a href="javascript:void(0)" class="filterby stopPop" @click="showFilterPop">Filter by</a>
         </div>
         <div class="accessory-result">
-          <!-- filter -->
-          <div class="filter stopPop" id="filter">
+          <!-- filter 这里是响应式部署，估计是看看css才知道-->
+          <div class="filter stopPop" id="filter" :class="{'filterby-show':filterBy}">
             <dl class="filter-price">
               <dt>Price:</dt>
               <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a></dd>
               <dd v-for="(price,index) in priceFilter">
-                <a href="javascript:void(0)" @click="priceChecked=index" :class="{'cur':priceChecked==index}" >{{price.startPrice}} -- {{price.endPrice}}</a>
+                <a href="javascript:void(0)" @click="setChoose(index)" :class="{'cur':priceChecked==index}" >{{price.startPrice}} -- {{price.endPrice}}</a>
               </dd>
             </dl>
           </div>
@@ -41,7 +41,7 @@
                     <div class="name">XX</div>
                     <div class="price">999</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                      <a href="javascript:" class="btn btn--m">加入购物车</a>
                     </div>
                   </div>
                 </li>
@@ -53,7 +53,7 @@
                     <div class="name">XX</div>
                     <div class="price">1000</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                      <a href="javascript:" class="btn btn--m">加入购物车</a>
                     </div>
                   </div>
                 </li>
@@ -65,7 +65,7 @@
                     <div class="name">XX</div>
                     <div class="price">500</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                      <a href="javascript:" class="btn btn--m">加入购物车</a>
                     </div>
                   </div>
                 </li>
@@ -77,7 +77,7 @@
                     <div class="name">XX</div>
                     <div class="price">2499</div>
                     <div class="btn-area">
-                      <a href="javascript:;" class="btn btn--m">加入购物车</a>
+                      <a href="javascript:" class="btn btn--m">加入购物车</a>
                     </div>
                   </div>
                 </li>
@@ -87,6 +87,7 @@
         </div>
       </div>
     </div>
+    <div class="md-overlay" v-show="overLay" @click="closePop"></div>
     <nav-footer></nav-footer>
   </div>
 </template>
@@ -121,12 +122,30 @@
           },
         ],
         priceChecked:'all',
+        filterBy:false,
+        overLay:false,
       }
     },
     components: {
       NavHeader,//这里默认解析成NavHeader:NavHeader的key value形式。es6语法。
       NavFooter,
       NavBread,
+    },
+    methods:{
+      showFilterPop(){
+        this.filterBy = true;
+        this.overLay = true
+      },
+      closePop(){
+        this.filterBy = false;
+        this.overLay = false
+      },
+      setChoose(index){
+        this.priceChecked = index;
+        if (this.filterBy && this.overLay){
+          this.closePop();
+        }
+      }
     }
   }
 </script>
