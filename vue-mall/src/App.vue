@@ -4,6 +4,8 @@
     <img src="./assets/logo.png">
     <!--route-view去承担一下route的所有路由-->
     <router-view/>
+    <router-view class="left" name="title"/>
+    <router-view class="right" name="img"/>
   </div>
 </template>
 
@@ -22,4 +24,10 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+  .left,.right{
+    float: left;
+    width: 49%;
+    border: 1px solid;
+    color: gray;
+  }
 </style>

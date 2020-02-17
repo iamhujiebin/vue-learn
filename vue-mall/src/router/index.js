@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from "../components/HelloWorld"
 import GoodList from "../views/GoodList"
 import Title from "../views/Title"
 import Image from "../views/Image"
@@ -13,8 +12,11 @@ export default new Router({//事实上是对console中api ：history的封装
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      components:{
+        default:GoodList,
+        title:Title,
+        img:Image,
+      }
     },
     {
       path:'/goods',
