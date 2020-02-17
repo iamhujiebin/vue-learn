@@ -17,3 +17,4 @@ new Vue({
   components: {App},
   template: '<App/>'
 });
+//可以通过.$mount("#app")  以及 render:h=>h(App) [底层Vue函数]
