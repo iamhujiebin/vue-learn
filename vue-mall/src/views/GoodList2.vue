@@ -22,18 +22,9 @@
           <div class="filter stopPop" id="filter">
             <dl class="filter-price">
               <dt>Price:</dt>
-              <dd><a href="javascript:void(0)">All</a></dd>
-              <dd>
-                <a href="javascript:void(0)">0 - 100</a>
-              </dd>
-              <dd>
-                <a href="javascript:void(0)">100 - 500</a>
-              </dd>
-              <dd>
-                <a href="javascript:void(0)">500 - 1000</a>
-              </dd>
-              <dd>
-                <a href="javascript:void(0)">1000 - 2000</a>
+              <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a></dd>
+              <dd v-for="(price,index) in priceFilter">
+                <a href="javascript:void(0)" @click="priceChecked=index" :class="{'cur':priceChecked==index}" >{{price.startPrice}} -- {{price.endPrice}}</a>
               </dd>
             </dl>
           </div>
@@ -106,9 +97,33 @@
   import NavHeader from "./../components/NavHeader"
   import NavFooter from "./../components/NavFooter"
   import NavBread from "./../components/NavBread"
+
   export default {
     name: "GoodList2",
-    components:{
+    data(){
+      return{
+        priceFilter:[
+          {
+            startPrice:'0.00',
+            endPrice:'100.00',
+          },
+          {
+            startPrice:'100.00',
+            endPrice:'500.00',
+          },
+          {
+            startPrice:'500.00',
+            endPrice:'1000.00',
+          },
+          {
+            startPrice:'1000.00',
+            endPrice:'2000.00',
+          },
+        ],
+        priceChecked:'all',
+      }
+    },
+    components: {
       NavHeader,//这里默认解析成NavHeader:NavHeader的key value形式。es6语法。
       NavFooter,
       NavBread,
