@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="node_modules/vue/dist/vue.js"></script>
+  <script src="node_modules/axios/dist/axios.js"></script>
+</head>
+<body>
+<div id="app">
+  <h1>vue-resource 使用，其实就是http</h1>
+  <a href="javascript:;" class="btn btn-primary" @click="get">Get请求</a>
+  <a href="javascript:;" class="btn btn-primary" v-on:click="post">Post请求</a>
+  <a href="javascript:;" class="btn btn-primary" @click="http">http请求</a>
+  <br>
+  <span>{{msg}}</span>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      msg: "",
+    },
+    mounted:function(){
+      axios.interceptors.request.use(function (config) {
+        console.log('req:',config)//此处可以做一些loading的渲染
+        return config
+      })
+      axios.interceptors.response.use(function (response) {
+        console.log('res:',response)
+        return response
+      })
+    },
+    methods: {
+      get: function () {
+        axios.get('package.json',{
+          params:{
+            userId:11,
+          },
+          headers:{
+            token:"jie",
+          }
+        }).then(res=>{
+          this.msg= res.data
+        }).catch(error=>{
+          console.log(error)
+        })
+      },
+      post:function () {
+        axios.post('package1.json',{//第三个参数才是option，第二个参数是body
+          userId:22,
+        },{
+          headers:{
+            token:"bin"
+          }
+        }).then(res=>{
+          this.msg = res.data
+        }).catch(error=>{
+          this.msg = error
+        })
+      },
+      http:function () {
+        axios({
+          url:'package.json',
+          method:'post',
+          params:{//get里面的
+            userId:33,
+          },
+          data:{
+            userId:44,
+          },
+          headers:{
+            token:"hu",
+          }
+        }).then(res=>{
+          this.msg = res
+        }).catch(function (error) {
+          this.msg = error//非es6的箭头函数
+        })
+      }
+    }
+  })
+</script>
+</body>
+</html>
