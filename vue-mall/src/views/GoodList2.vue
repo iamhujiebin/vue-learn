@@ -35,7 +35,7 @@
               <ul>
                 <li>
                   <div class="pic">
-                    <a href="#"><img src="static/img/1.jpg" alt=""></a>
+                    <a href="#"><img v-lazy="'static/img/1.jpg'" alt=""></a>
                   </div>
                   <div class="main">
                     <div class="name">XX</div>
