@@ -4,6 +4,7 @@ import HelloWorld from "../components/HelloWorld"
 import GoodList from "../views/GoodList"
 import Title from "../views/Title"
 import Image from "../views/Image"
+import Cart from "../views/Cart"
 
 Vue.use(Router)
 
@@ -31,6 +32,10 @@ export default new Router({//事实上是对console中api ：history的封装
           component:Image,
         }
       ],
+    },
+    {
+      path:'/cart',
+      component:Cart,
     }
   ]
 })
