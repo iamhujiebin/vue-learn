@@ -13,7 +13,7 @@
   <h1>vue-resource 使用，其实就是http</h1>
   <a href="javascript:;" class="btn btn-primary" @click="get">Get请求</a>
   <a href="javascript:;" class="btn btn-primary" v-on:click="post">Post请求</a>
-  <a href="javascript:;" class="btn btn-primary">JsonP请求</a>
+  <a href="javascript:;" class="btn btn-primary" @click="http">http请求</a>
   <br>
   <span>{{msg}}</span>
 </div>
@@ -23,9 +23,21 @@
     data: {
       msg: "",
     },
+    mounted:function(){
+      Vue.http.interceptors.push(function (request,next) {//http全局拦截器
+        console.log("request init");
+        next(function (response) {
+          console.log("response init");
+          return response
+        })
+      })
+    },
+    http:{
+      root:"http://localhost:63342/vue-mall/",//http请求的前缀，例如下面package.json，会拼接成为$root/package.json
+    },
     methods: {
       get: function () {
-        this.$http.get("package1.json", {
+        this.$http.get("package.json", {
           params: {
             userId: 1,
           },
@@ -41,11 +53,33 @@
         )
       },
       post:function () {
-        this.$http.post("package.json",{
+        this.$http.post("package1.json",{
           userId:2,
         },{
           headers:{
             token2:"efg",
+          }
+        }).then(res=>{
+          this.msg = res.data
+        },error=>{
+          this.msg = error
+        })
+      },
+      http:function () {
+        this.$http({
+          url: "package.json",
+          headers:{
+            token3:"ljk",
+          },
+          params:{
+            userId:3,
+          },
+          timeout:50000,//毫秒
+          before: function () {
+            console.log("before")
+          },
+          after:function () {
+            console.log("after")
           }
         }).then(res=>{
           this.msg = res.data
