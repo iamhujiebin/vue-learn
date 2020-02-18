@@ -22,9 +22,11 @@
           <div class="filter stopPop" id="filter" :class="{'filterby-show':filterBy}">
             <dl class="filter-price">
               <dt>Price:</dt>
-              <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a></dd>
+              <dd><a href="javascript:void(0)" v-bind:class="{'cur':priceChecked=='all'}" @click="priceChecked='all'">All</a>
+              </dd>
               <dd v-for="(price,index) in priceFilter">
-                <a href="javascript:void(0)" @click="setChoose(index)" :class="{'cur':priceChecked==index}" >{{price.startPrice}} -- {{price.endPrice}}</a>
+                <a href="javascript:void(0)" @click="setChoose(index)" :class="{'cur':priceChecked==index}">{{price.startPrice}}
+                  -- {{price.endPrice}}</a>
               </dd>
             </dl>
           </div>
@@ -33,55 +35,26 @@
           <div class="accessory-list-wrap">
             <div class="accessory-list col-4">
               <ul>
-                <li>
+                <li v-for="goods in goodLists">
                   <div class="pic">
-                    <a href="#"><img v-lazy="'static/img/1.jpg'" alt=""></a>
+                    <a href="#">
+                      <img v-bind:src="goods.pic" alt="">
+                    </a>
                   </div>
                   <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">999</div>
-                    <div class="btn-area">
-                      <a href="javascript:" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/img/2.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">1000</div>
-                    <div class="btn-area">
-                      <a href="javascript:" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/img/3.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">500</div>
-                    <div class="btn-area">
-                      <a href="javascript:" class="btn btn--m">加入购物车</a>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="pic">
-                    <a href="#"><img src="static/img/4.jpg" alt=""></a>
-                  </div>
-                  <div class="main">
-                    <div class="name">XX</div>
-                    <div class="price">2499</div>
+                    <div class="name">{{goods.name}}</div>
+                    <div class="price">{{goods.price}}</div>
                     <div class="btn-area">
                       <a href="javascript:" class="btn btn--m">加入购物车</a>
                     </div>
                   </div>
                 </li>
               </ul>
+              <div class="load-more" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+                <img src="@/assets/svg/Spinner-1s-200px.svg" v-show="loadMsgShow">
+                <span v-show="!loadMsgShow">{{loadMoreMsg}}</span>
+
+              </div>
             </div>
           </div>
         </div>
@@ -98,32 +71,42 @@
   import NavHeader from "./../components/NavHeader"
   import NavFooter from "./../components/NavFooter"
   import NavBread from "./../components/NavBread"
+  import axios from "axios"
 
   export default {
     name: "GoodList2",
-    data(){
-      return{
-        priceFilter:[
+    mounted() {
+      this.getGoodsList()
+    },
+    data() {
+      return {
+        priceFilter: [
           {
-            startPrice:'0.00',
-            endPrice:'100.00',
+            startPrice: '0.00',
+            endPrice: '100.00',
           },
           {
-            startPrice:'100.00',
-            endPrice:'500.00',
+            startPrice: '100.00',
+            endPrice: '500.00',
           },
           {
-            startPrice:'500.00',
-            endPrice:'1000.00',
+            startPrice: '500.00',
+            endPrice: '1000.00',
           },
           {
-            startPrice:'1000.00',
-            endPrice:'2000.00',
+            startPrice: '1000.00',
+            endPrice: '2000.00',
           },
         ],
-        priceChecked:'all',
-        filterBy:false,
-        overLay:false,
+        priceChecked: 'all',
+        filterBy: false,
+        overLay: false,
+        goodLists: [],
+        page: 1,
+        pageSize: 4,
+        busy: true,
+        loadMoreMsg:"loadingMore",
+        loadMsgShow:true
       }
     },
     components: {
@@ -131,20 +114,50 @@
       NavFooter,
       NavBread,
     },
-    methods:{
-      showFilterPop(){
+    methods: {
+      showFilterPop() {
         this.filterBy = true;
         this.overLay = true
       },
-      closePop(){
+      closePop() {
         this.filterBy = false;
         this.overLay = false
       },
-      setChoose(index){
+      setChoose(index) {
         this.priceChecked = index;
-        if (this.filterBy && this.overLay){
+        if (this.filterBy && this.overLay) {
           this.closePop();
         }
+      },
+      getGoodsList(flag) {
+        axios.get("http://127.0.0.1:3600/goods/list", {
+          params: {
+            page: this.page,
+            size: this.pageSize,
+          }
+        }).then(res => {
+          if (flag) {
+            this.goodLists = this.goodLists.concat(res.data.body.models);
+          } else {
+            this.goodLists = res.data.body.models;
+          }
+          this.busy = res.data.body.models.length == 0;
+          this.loadMsgShow = res.data.body.models.length == 0 ? false:true;
+          this.loadMoreMsg = res.data.body.models.length == 0? "no more goods" : " loading more"
+        }).catch(error => {
+          this.goodLists = [];
+          this.busy = true;
+          console.log(error)
+        })
+      },
+      loadMore() {
+        this.busy = true;
+        setTimeout(() => {
+          this.page++;
+          this.getGoodsList(true);
+          this.busy = false;
+        }, 100);//100ms 内不会频繁请求，避免服务器压力，
+
       }
     }
   }

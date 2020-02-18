@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueLazyLoad from "vue-lazyload";
+import VueInfiniteScroll from "vue-infinite-scroll"
 // import {sum,minus} from "./utils";
 // import * as utils from "./utils";
 
@@ -14,6 +15,8 @@ Vue.config.productionTip = false;
 Vue.use(VueLazyLoad,{
   loading:"/static/svg/loading-balls/svg"
 })
+
+Vue.use(VueInfiniteScroll)
 
 /* eslint-disable no-new */
 new Vue({

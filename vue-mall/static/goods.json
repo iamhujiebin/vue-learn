@@ -1,0 +1,103 @@
+{
+  "code": 0,
+  "body": {
+    "models": [
+      {
+        "id": 1,
+        "price": 99,
+        "name": "小米蓝牙音响",
+        "pic": "static/img/1.jpg"
+      },
+      {
+        "id": 2,
+        "price": 100,
+        "name": "小米手柄",
+        "pic": "static/img/2.jpg"
+      },
+      {
+        "id": 3,
+        "price": 1001,
+        "name": "小米耳机",
+        "pic": "static/img/3.jpg"
+      },
+      {
+        "id": 4,
+        "price": 200,
+        "name": "leme高级耳机",
+        "pic": "static/img/4.jpg"
+      },
+      {
+        "id": 5,
+        "price": 301,
+        "name": "leme须刨",
+        "pic": "static/img/5.jpg"
+      },
+      {
+        "id": 6,
+        "price": 40,
+        "name": "小米排插",
+        "pic": "static/img/6.jpg"
+      },
+      {
+        "id": 7,
+        "price": 100,
+        "name": "粉红耳机",
+        "pic": "static/img/7.jpg"
+      },
+      {
+        "id": 8,
+        "price": 800,
+        "name": "小米空气净化机",
+        "pic": "static/img/8.jpg"
+      },
+      {
+        "id": 9,
+        "price": 900,
+        "name": "小米电饭煲",
+        "pic": "static/img/9.jpg"
+      },
+      {
+        "id": 10,
+        "price": 3000,
+        "name": "小米电视",
+        "pic": "static/img/10.jpg"
+      },
+      {
+        "id": 11,
+        "price": 85,
+        "name": "垃圾粉红耳机",
+        "pic": "static/img/11.jpg"
+      },
+      {
+        "id": 12,
+        "price": 100,
+        "name": "好点leme耳机",
+        "pic": "static/img/12.jpg"
+      },
+      {
+        "id": 13,
+        "price": 1000,
+        "name": "橙色空气净化机",
+        "pic": "static/img/13.jpg"
+      },
+      {
+        "id": 14,
+        "price": 1000,
+        "name": "粉色空气净化器",
+        "pic": "static/img/14.jpg"
+      },
+      {
+        "id": 15,
+        "price": 10,
+        "name": "数据线",
+        "pic": "static/img/15.jpg"
+      },
+      {
+        "id": 16,
+        "price": 110,
+        "name": "红色leme耳机",
+        "pic": "static/img/16.jpg"
+      }
+    ]
+  }
+}

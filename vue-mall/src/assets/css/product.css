@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/*注意下这里after，其实是当定于加一个空的<div>，因为ul标签不能加div，所以用after形式，中间加个content：空*/
 .accessory-list > ul:after {
   visibility: hidden;
   display: block;
@@ -527,6 +528,12 @@
 .accessory-result-page .view-more-normal .view-more-btn {
   top: 0;
   padding-top: 40px;
+}
+
+.load-more {
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
 }
 
 @media only screen and (max-width: 767px) {
