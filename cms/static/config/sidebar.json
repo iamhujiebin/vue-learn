@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1",
+    "name": "User",
+    "icon": "pie-chart",
+    "child": [
+      {
+        "id": "1-1",
+        "name": "user list"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Live",
+    "icon": "desktop",
+    "child": [
+      {
+        "id": "2-1",
+        "name": "lucky draw"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Fans",
+    "icon": "file",
+    "child": [
+      {
+        "id": "3-1",
+        "name": "fans group"
+      }
+    ]
+  }
+]
