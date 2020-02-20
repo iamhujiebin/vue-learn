@@ -51,9 +51,9 @@
                 </li>
               </ul>
               <div class="load-more" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-                <img src="@/assets/svg/Spinner-1s-200px.svg" v-show="loadMsgShow">
+                <a-button shape="circle" loading v-show="loadMsgShow" />
+                <!--<img src="@/assets/svg/Spinner-1s-200px.svg" >-->
                 <span v-show="!loadMsgShow">{{loadMoreMsg}}</span>
-
               </div>
             </div>
           </div>

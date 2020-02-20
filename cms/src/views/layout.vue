@@ -1,7 +1,7 @@
 <template>
   <a-layout id="components-layout-demo-side" style="min-height: 100vh">
     <a-layout-sider collapsible v-model="collapsed">
-      <div class="logo">搜索待定</div>
+      <a-input-search placeholder="input search text" style="width: 98%" @search="onSearch"></a-input-search>
       <a-menu :theme="theme" mode="inline" :selectedKeys="selectedKeys" v-for="side in sidebar" v-bind:key="side.id">
         <a-sub-menu v-show="side.child != null" v-for="child in side.child" :key="child.id">
           <span slot="title">
@@ -23,7 +23,7 @@
         </div>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
-        Ant Design ©2018 Created by Ant UED
+        Ant Design ©2020 Created by jiebin UED
       </a-layout-footer>
     </a-layout>
   </a-layout>
@@ -33,20 +33,11 @@
 
   export default {
     mounted() {
-      axios.get('/static/config/sidebar.json').then(res => {
-        this.sidebar = res.data;
-        this.sidebar.forEach(value => {
-          this.sidebarNameMap[value.id] = value.name
-          if (value.child != null) {
-            value.child.forEach(value2=>{
-              this.sidebarNameMap[value2.id] = value2.name
-            })
-          }
-        })
-      })
+      this.getSideBar();
     },
     data() {
       return {
+        originSidebar: [],
         sidebar: [],
         sidebarNameMap: {},
         collapsed: false,
@@ -59,8 +50,44 @@
       setSelectedKeys(value) {
         this.selectedKeys = [value];
         let pi = value.split("-")[0];
-        this.breadcrumb = [this.sidebarNameMap[pi],this.sidebarNameMap[value]];
+        this.breadcrumb = [this.sidebarNameMap[pi], this.sidebarNameMap[value]];
         console.log(this.breadcrumb)
+      },
+      getSideBar() {
+        axios.get('/static/config/sidebar.json').then(res => {
+          this.sidebar = res.data;
+          this.originSidebar = res.data;
+          this.sidebar.forEach(value => {
+            this.sidebarNameMap[value.id] = value.name;
+            if (value.child != null) {
+              value.child.forEach(value2 => {
+                this.sidebarNameMap[value2.id] = value2.name
+              })
+            }
+          })
+        });
+      },
+      onSearch(search) {
+        console.log(`search:${search}`);
+        //不能直接axios获取数据，是异步操作的。可能下面的先执行，导致重新渲染了
+        let sidebar = this.originSidebar.slice();
+        console.log(`sidebar:${JSON.stringify(sidebar)}`);
+        let res = [];
+        sidebar.forEach(value => {
+          if (value.name.indexOf(search) > -1) {
+            res.push(value)
+          }else {
+            if (value.child != null) {
+              value.child.forEach(value2 => {
+                if (value2.name.indexOf(search) > -1) {
+                  res.push(value)
+                  return
+                }
+              })
+            }
+          }
+        });
+        this.sidebar = res;
       }
     }
   };
