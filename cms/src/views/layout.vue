@@ -18,9 +18,7 @@
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item v-for="(item,index) in breadcrumb" :key="index">{{item}}</a-breadcrumb-item>
         </a-breadcrumb>
-        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
-          Bill is a cat.
-        </div>
+        <user-list v-show="showTab==='user list'"></user-list>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2020 Created by jiebin UED
@@ -30,6 +28,7 @@
 </template>
 <script>
   import axios from "axios"
+  import UserList from "../components/UserList"
 
   export default {
     mounted() {
@@ -44,13 +43,18 @@
         theme: 'dark',
         selectedKeys: [],
         breadcrumb: [],
+        showTab:'',
       };
+    },
+    components:{
+      UserList,
     },
     methods: {
       setSelectedKeys(value) {
         this.selectedKeys = [value];
         let pi = value.split("-")[0];
         this.breadcrumb = [this.sidebarNameMap[pi], this.sidebarNameMap[value]];
+        this.showTab = this.sidebarNameMap[value]
         console.log(this.breadcrumb)
       },
       getSideBar() {
