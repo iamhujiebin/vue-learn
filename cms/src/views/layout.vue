@@ -13,7 +13,9 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0"></a-layout-header>
+      <a-layout-header style="background: lightcyan; padding: 0">
+        <nav-header></nav-header>
+      </a-layout-header>
       <a-layout-content style="margin: 0 16px">
         <a-breadcrumb style="margin: 16px 0">
           <a-breadcrumb-item v-for="(item,index) in breadcrumb" :key="index">{{item}}</a-breadcrumb-item>
@@ -29,6 +31,7 @@
 <script>
   import axios from "axios"
   import UserList from "../components/UserList"
+  import NavHeader from "../components/NavHeader";
 
   export default {
     mounted() {
@@ -43,10 +46,11 @@
         theme: 'dark',
         selectedKeys: [],
         breadcrumb: [],
-        showTab:'user list',
+        showTab: 'user list',
       };
     },
-    components:{
+    components: {
+      NavHeader,
       UserList,
     },
     methods: {
@@ -80,7 +84,7 @@
         sidebar.forEach(value => {
           if (value.name.indexOf(search) > -1) {
             res.push(value)
-          }else {
+          } else {
             if (value.child != null) {
               value.child.forEach(value2 => {
                 if (value2.name.indexOf(search) > -1) {
@@ -92,7 +96,7 @@
           }
         });
         this.sidebar = res;
-      }
+      },
     }
   };
 </script>
