@@ -31,5 +31,16 @@
         "name": "fans group list"
       }
     ]
+  },
+  {
+    "id": "4",
+    "name": "WebSocket",
+    "icon": "file",
+    "child": [
+      {
+        "id": "4-1",
+        "name": "websocket"
+      }
+    ]
   }
 ]

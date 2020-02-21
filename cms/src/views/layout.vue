@@ -21,6 +21,7 @@
           <a-breadcrumb-item v-for="(item,index) in breadcrumb" :key="index">{{item}}</a-breadcrumb-item>
         </a-breadcrumb>
         <user-list v-show="showTab==='user list'"></user-list>
+        <web-socket v-show="showTab==='websocket'"></web-socket>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2020 Created by jiebin UED
@@ -32,6 +33,7 @@
   import axios from "axios"
   import UserList from "../components/UserList"
   import NavHeader from "../components/NavHeader";
+  import WebSocket from "../components/websocket";
 
   export default {
     mounted() {
@@ -52,6 +54,7 @@
     components: {
       NavHeader,
       UserList,
+      WebSocket,
     },
     methods: {
       setSelectedKeys(value) {
