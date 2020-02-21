@@ -43,7 +43,7 @@
         theme: 'dark',
         selectedKeys: [],
         breadcrumb: [],
-        showTab:'',
+        showTab:'user list',
       };
     },
     components:{
@@ -54,7 +54,7 @@
         this.selectedKeys = [value];
         let pi = value.split("-")[0];
         this.breadcrumb = [this.sidebarNameMap[pi], this.sidebarNameMap[value]];
-        this.showTab = this.sidebarNameMap[value]
+        this.showTab = this.sidebarNameMap[value];
         console.log(this.breadcrumb)
       },
       getSideBar() {
@@ -84,8 +84,8 @@
             if (value.child != null) {
               value.child.forEach(value2 => {
                 if (value2.name.indexOf(search) > -1) {
-                  res.push(value)
-                  return
+                  res.push(value);
+                  return true
                 }
               })
             }
