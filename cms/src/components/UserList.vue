@@ -154,7 +154,7 @@
           content: `删除用户:${record.username},userId:${record.user_id}`,
           okText: '确认',
           cancelText: '取消',
-          onOk: () => {//这里需要协成要给function的形式(es6),才能直接this.getUserList()。像下面的onCancel的写法不行。
+          onOk: () => {//这里需要协成要给function的形式(es6),才能直接this.getUserList()。像下面的onCancel(){}的写法不行。
             axios.get("http://127.0.0.1:3600/user/del", {
               params: {
                 user_id: record.user_id,
@@ -162,6 +162,7 @@
             }).then(res => {
               if (res.data.code === 0) {
                 this.getUserList();
+                this.openNotification();
               } else {
                 alert(`出错1:${res.message}`)
               }
@@ -169,10 +170,16 @@
               alert(`出错2:${error}`)
             });
           },
-          onCancel() {
+          onCancel: () => {
           }
         });
-      }
+      },
+      openNotification() {
+        this.$notification.open({
+          message: '删除成功',
+          icon: <a-icon type="smile" style="color: #108ee9" />,
+        });
+      },
     },
   };
 </script>
