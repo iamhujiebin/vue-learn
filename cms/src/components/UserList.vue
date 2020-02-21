@@ -19,13 +19,13 @@
         </a-col>
       </a-row>
     </a-form>
-    <a-table :columns="columns" :dataSource="userData">
-      <a slot="name" slot-scope="text" href="javascript:;">{{text}}</a>
+    <a-table :columns="columns" :dataSource="userData" :pagination="pagination" @change="onPageChange">
+      <a slot="name" slot-scope="text" href="javascript:">{{text}}</a>
       <span slot="customTitle"><a-icon type="smile-o"/> Name</span>
       <span slot="action" slot-scope="record">
-        <a href="javascript:;">Edit</a>
+        <a href="javascript:">Edit</a>
         <a-divider type="vertical"/>
-        <a href="javascript:;">Delete</a>
+        <a href="javascript:">Delete</a>
         <a-divider type="vertical"/>
         <!--<a href="javascript:;" class="ant-dropdown-link"> More actions <a-icon type="down"/> </a>-->
      </span>
@@ -86,14 +86,23 @@
 
   export default {
     mounted() {
-      this.getUserList();
+      //this.getUserList();
     },
     data() {
       return {
         columns,
         form: this.$form.createForm(this),
-        searchValues: ["user_id", "username"],
+        searchValues: ["username"],
+        userId: 0,
+        username: '',
         userData: [],
+        pagination: {
+          total: 0,
+          defaultPageSize: 4,
+          position: 'top',
+          showSizeChanger: true,
+          pageSize:4,
+        }
       };
     },
     methods: {
@@ -104,29 +113,40 @@
             console.log('error', error);
             return
           }
-          this.getUserList(values.user_id,values.username)
+          this.pagination.page = 1;
+          this.userId = values.user_id;
+          this.username = values.username;
+          this.getUserList()
         });
       },
       handleReset() {
         this.form.resetFields();
       },
-      getUserList(userId,username) {
+      getUserList() {
         axios.get("http://127.0.0.1:3600/user/getlist", {
           params: {
-            user_id: userId,
-            username: username,
+            user_id: this.userId,
+            username: this.username,
+            page: this.pagination.page,
+            page_size: this.pagination.pageSize,
           }
         }).then(res => {
           this.userData = res.data.body.rows;
-          if (this.userData != null){
+          this.pagination.total = res.data.body.total;
+          if (this.userData != null) {
             this.userData.forEach(value => {
               value.key = value.user_id//为了vue 不报warning
             })
           }
-          console.log(JSON.stringify(this.userData))
         }).catch(error => {
           console.log(`getUserList fail:${error}`)
         })
+      },
+      onPageChange(pagination) {
+        console.log(JSON.stringify(pagination));
+        this.pagination.page = pagination.current;
+        this.pagination.pageSize = pagination.pageSize;
+        this.getUserList()
       }
     },
   };
