@@ -19,11 +19,41 @@
         </a-col>
       </a-row>
     </a-form>
+    <a-modal title="编辑用户" v-model="modalVisible" @ok="handleEditOk" @cancel="handleEditCancel">
+      <a-form>
+        <a-form-item label="user_id" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-input
+            v-decorator="['user_id', { rules: [{ required: false, message: '' }] }]"
+            v-model="editUser.user_id"
+            disabled="disabled"
+          />
+        </a-form-item>
+
+        <a-form-item label="Username" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-input
+            v-decorator="['username', { rules: [{ required: true, message: 'Please input your username!' }] }]"
+            v-model="editUser.username"
+          />
+        </a-form-item>
+        <a-form-item label="age" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-input
+            v-decorator="['age', { rules: [{ required: true, message: 'Please input your age!' }] }]"
+            v-model="editUser.age"
+          />
+        </a-form-item>
+        <a-form-item label="address" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-input
+            v-decorator="['address', { rules: [{ required: false, message: 'Please input your address!' }] }]"
+            v-model="editUser.address"
+          />
+        </a-form-item>
+      </a-form>
+    </a-modal>
     <a-table :columns="columns" :dataSource="userData" :pagination="pagination" @change="onPageChange">
       <a slot="name" slot-scope="text" href="javascript:">{{text}}</a>
       <span slot="customTitle"><a-icon type="smile-o"/> Name</span>
       <span slot="action" slot-scope="record">
-        <a href="javascript:">Edit</a>
+        <a-button type="primary" @click="showModal(record)">Edit</a-button>
         <a-divider type="vertical"/>
          <a-button @click="confirmDelete(record)">Delete</a-button>
         <a-divider type="vertical"/>
@@ -33,6 +63,9 @@
   </div>
 </template>
 <script>
+  import AFormItem from "ant-design-vue/es/form/FormItem";
+  import axios from "axios"
+
   const columns = [
     {
       dataIndex: 'user_id',
@@ -82,10 +115,10 @@
     },
   ];
 
-  import axios from "axios"
-
   export default {
+    components: {AFormItem},
     mounted() {
+      console.log(`userData demo:${data}`)
       //this.getUserList();
     },
     data() {
@@ -96,13 +129,15 @@
         userId: 0,
         username: '',
         userData: [],
+        modalVisible: false,
         pagination: {
           total: 0,
           position: 'top',
           showSizeChanger: true,
           pageSize: 10,
           showQuickJumper: true,
-        }
+        },
+        editUser: {}
       };
     },
     methods: {
@@ -180,6 +215,40 @@
           icon: <a-icon type="smile" style="color: #108ee9" />,
         });
       },
+      openNotificationEditOk() {
+        this.$notification.open({
+          message: '修改成功',
+          icon: <a-icon type="smile" style="color: #108ee9" />,
+        });
+      },
+      showModal(record) {
+        this.editUser = Object.assign({}, record);//需要拷贝一个record内容，因为record绑定的是table中row的记录。如果直接赋值给this.editUser,会导致两者绑定一起
+        this.modalVisible = true;
+      },
+      handleEditOk() {
+        console.log(this.editUser);
+        axios.get("http://127.0.0.1:3600/user/update", {
+          params: {
+            user_id: this.editUser.user_id,
+            username: this.editUser.username,
+            age: this.editUser.age,
+            address: this.editUser.address,
+          }
+        }).then(res => {
+          if (res.data.code === 0) {
+            this.openNotificationEditOk();
+            this.getUserList();
+          } else {
+            alert(`出错:${res.data.message}`)
+          }
+        }).catch(error => {
+          alert(`出错:${error}`)
+        });
+        this.modalVisible = false;
+      },
+      handleEditCancel() {
+        //this.getUserList() 因为上面的Object.assign({},record)，这里就可以省了
+      }
     },
   };
 </script>
