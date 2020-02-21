@@ -25,7 +25,7 @@
       <span slot="action" slot-scope="record">
         <a href="javascript:">Edit</a>
         <a-divider type="vertical"/>
-        <a href="javascript:">Delete</a>
+         <a-button @click="confirmDelete(record)">Delete</a-button>
         <a-divider type="vertical"/>
         <!--<a href="javascript:;" class="ant-dropdown-link"> More actions <a-icon type="down"/> </a>-->
      </span>
@@ -98,10 +98,10 @@
         userData: [],
         pagination: {
           total: 0,
-          defaultPageSize: 4,
           position: 'top',
           showSizeChanger: true,
-          pageSize:4,
+          pageSize: 10,
+          showQuickJumper: true,
         }
       };
     },
@@ -147,6 +147,31 @@
         this.pagination.page = pagination.current;
         this.pagination.pageSize = pagination.pageSize;
         this.getUserList()
+      },
+      confirmDelete(record) {
+        this.$confirm({
+          title: 'Confirm',
+          content: `删除用户:${record.username},userId:${record.user_id}`,
+          okText: '确认',
+          cancelText: '取消',
+          onOk: () => {//这里需要协成要给function的形式(es6),才能直接this.getUserList()。像下面的onCancel的写法不行。
+            axios.get("http://127.0.0.1:3600/user/del", {
+              params: {
+                user_id: record.user_id,
+              }
+            }).then(res => {
+              if (res.data.code === 0) {
+                this.getUserList();
+              } else {
+                alert(`出错1:${res.message}`)
+              }
+            }).catch(error => {
+              alert(`出错2:${error}`)
+            });
+          },
+          onCancel() {
+          }
+        });
       }
     },
   };
