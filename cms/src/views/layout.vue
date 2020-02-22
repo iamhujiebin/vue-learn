@@ -37,9 +37,6 @@
 
   export default {
     mounted() {
-      if (this.$cookie.get("username") == null){
-        this.$router.push("/").then(()=>{alert("请先登录")}).catch(error=>{console.log(error)})
-      }
       this.getSideBar();
     },
     data() {
