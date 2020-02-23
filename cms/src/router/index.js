@@ -6,7 +6,7 @@ import Login from './../views/login'
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
+  mode:'hash',//如果使用history参数（需要服务端支持），那么打包之后的，就无法通过127.0.0.1/cms直接访问页面了；hash模式用#分割，就可以不依赖服务器了
   routes: [
     {
       path:"/",
