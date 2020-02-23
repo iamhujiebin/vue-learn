@@ -1,24 +1,26 @@
 <template>
   <div>
-    <a-form class="ant-advanced-search-form" :form="form" @submit="handleSearch">
-      <a-row :gutter="24">
-        <a-col v-for="(field,index) in searchValues" :key="index" :span="8">
-          <a-form-item :label="field">
-            <a-input :placeholder="field" v-decorator="[`${field}`,{rules: [{required: false}]}]"/>
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-row>
-        <a-col :span="24" :style="{ textAlign: 'right' }">
-          <a-button type="primary" html-type="submit">
-            Search
-          </a-button>
-          <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
-            Clear
-          </a-button>
-        </a-col>
-      </a-row>
-    </a-form>
+    <div class="ant-advanced-search-form">
+      <a-form  :form="form" @submit="handleSearch">
+        <a-row :gutter="24">
+          <a-col v-for="(field,index) in searchValues" :key="index" :span="8">
+            <a-form-item :label="field">
+              <a-input :placeholder="field" v-decorator="[`${field}`,{rules: [{required: false}]}]"/>
+            </a-form-item>
+          </a-col>
+        </a-row>
+        <a-row>
+          <a-col :span="24" :style="{ textAlign: 'right' }">
+            <a-button type="primary" html-type="submit">
+              Search
+            </a-button>
+            <a-button :style="{ marginLeft: '8px' }" @click="handleReset">
+              Clear
+            </a-button>
+          </a-col>
+        </a-row>
+      </a-form>
+    </div>
     <a-modal title="编辑用户" v-model="modalVisible" @ok="handleEditOk" @cancel="handleEditCancel">
       <a-form>
         <a-form-item label="user_id" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
@@ -255,7 +257,7 @@
 
 <style>
   .ant-advanced-search-form {
-    padding: 10px;
+    padding: 15px;
     background: #fbfbfb;
     border: 1px solid #d9d9d9;
     border-radius: 6px;
