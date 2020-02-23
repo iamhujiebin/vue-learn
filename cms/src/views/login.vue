@@ -57,6 +57,11 @@
   import axios from 'axios'
 
   export default {
+    mounted(){
+      if (this.$cookie.get("username") != null){
+        this.$router.push("/cms").then(()=>{console.log(`cookie has login:${this.$cookie.get("username")}`)}).catch(error=>{console.error(error)})
+      }
+    },
     beforeCreate() {
       this.form = this.$form.createForm(this);
     },
