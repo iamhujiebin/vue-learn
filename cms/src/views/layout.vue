@@ -47,7 +47,7 @@
         collapsed: false,
         theme: 'dark',
         selectedKeys: [],
-        breadcrumb: [],
+        breadcrumb: ["User","user list"],
         showTab: 'user list',
       };
     },
