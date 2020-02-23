@@ -70,7 +70,7 @@
         e.preventDefault();
         this.form.validateFields((err, values) => {
           if (!err) {
-            axios.get("http://127.0.0.1:3600/user/login", {
+            axios.get(`${process.env.HTTP_URL}/user/login`, {
               params: {
                 username: values.username,
                 password: values.password,

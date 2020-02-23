@@ -160,7 +160,7 @@
         this.form.resetFields();
       },
       getUserList() {
-        axios.get("http://127.0.0.1:3600/user/getlist", {
+        axios.get(`${process.env.HTTP_URL}/user/getlist`, {
           params: {
             user_id: this.userId,
             username: this.username,
@@ -192,7 +192,7 @@
           okText: '确认',
           cancelText: '取消',
           onOk: () => {//这里需要协成要给function的形式(es6),才能直接this.getUserList()。像下面的onCancel(){}的写法不行。
-            axios.get("http://127.0.0.1:3600/user/del", {
+            axios.get(`${process.env.HTTP_URL}/user/del`, {
               params: {
                 user_id: record.user_id,
               }
@@ -229,7 +229,7 @@
       },
       handleEditOk() {
         console.log(this.editUser);
-        axios.get("http://127.0.0.1:3600/user/update", {
+        axios.get(`${process.env.HTTP_URL}/user/update`, {
           params: {
             user_id: this.editUser.user_id,
             username: this.editUser.username,
