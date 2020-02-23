@@ -2,6 +2,7 @@
   <div class="todo">
     <a-button type="primary" @click="initWebSocket">初始化websocket</a-button>
     <a-button type="primary" @click="websocketDoClose">断开websocket</a-button>
+    <a-button type="primary" @click="websocketDoSend">发消息</a-button>
       <div slot="header"><h3>{{connectMsg}}</h3></div>
     <ul v-for="msg in receiveMsg">
       <transition name = "slide-fade">
@@ -61,8 +62,13 @@
         const res = JSON.parse(e.data);
         this.receiveMsg.push(res);
       },
-      websocketSend(Data) {//数据发送
-        this.websocket.send(Data);
+      websocketSend(data) {//数据发送
+        this.websocket.send(data);
+      },
+      websocketDoSend(){
+        if (this.websocket != null) {
+          this.websocket.send(JSON.stringify(`{test:123}`));
+        }
       },
       websocketDoClose() {
         if (this.websocket != null) {
