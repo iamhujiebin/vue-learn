@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from './../views/Layout'
 import Login from './../views/login'
+import Chart2 from './../components/Chart2'
 
 Vue.use(Router)
 
@@ -19,6 +20,10 @@ export default new Router({
     {
       path:"/login",
       component:Login,
+    },
+    {
+      path:"/chart",
+      component:Chart2,
     }
   ]
 })

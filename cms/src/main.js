@@ -7,6 +7,7 @@ import Antd from 'ant-design-vue'
 import VueCookie from 'vue-cookie'
 import axios from 'axios'
 import 'ant-design-vue/dist/antd.css'
+import myCharts from './comm/js/myCharts'
 
 Vue.config.productionTip = false;
 
@@ -27,6 +28,7 @@ axios.interceptors.request.use(function (config) {
 
 Vue.use(Antd);
 Vue.use(VueCookie);
+Vue.use(myCharts);
 
 /* eslint-disable no-new */
 new Vue({
