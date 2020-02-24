@@ -3,12 +3,12 @@
     <a-layout-sider collapsible v-model="collapsed">
       <a-input-search placeholder="input search text" style="width: 98%" @search="onSearch"></a-input-search>
       <a-menu :theme="theme" mode="inline" :selectedKeys="selectedKeys" v-for="side in sidebar" v-bind:key="side.id">
-        <a-sub-menu v-show="side.child != null" v-for="child in side.child" :key="child.id">
+        <a-sub-menu v-show="side.child != null">
           <span slot="title">
             <a-icon :type="side.icon"/>
             <span>{{side.name}}</span>
           </span>
-          <a-menu-item :key="child.id" @click="setSelectedKeys(child.id)">{{child.name}}</a-menu-item>
+          <a-menu-item v-for="child in side.child" :key="child.id" @click="setSelectedKeys(child.id)">{{child.name}}</a-menu-item>
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
@@ -22,6 +22,7 @@
         </a-breadcrumb>
         <user-list v-show="showTab==='user list'"></user-list>
         <web-socket v-show="showTab==='websocket'"></web-socket>
+        <user-event-chart v-show="showTab==='user event'"></user-event-chart>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2020 Created by jiebin UED
@@ -33,7 +34,8 @@
   import axios from "axios"
   import UserList from "../components/UserList"
   import NavHeader from "../components/NavHeader";
-  import WebSocket from "../components/websocket";
+  import WebSocket from "../components/WebSocket";
+  import UserEventChart from "../components/UserEventChart";
 
   export default {
     mounted() {
@@ -55,6 +57,7 @@
       NavHeader,
       UserList,
       WebSocket,
+      UserEventChart,
     },
     methods: {
       setSelectedKeys(value) {
