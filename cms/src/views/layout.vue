@@ -22,7 +22,8 @@
         </a-breadcrumb>
         <user-list v-show="showTab==='user list'"></user-list>
         <web-socket v-show="showTab==='websocket'"></web-socket>
-        <user-event-chart v-show="showTab==='user event'"></user-event-chart>
+        <user-event-sum-chart v-show="showTab==='user event sum'"></user-event-sum-chart>
+        <user-event-one-chart v-show="showTab==='user event one'"></user-event-one-chart>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
         Ant Design ©2020 Created by jiebin UED
@@ -35,7 +36,8 @@
   import UserList from "../components/UserList"
   import NavHeader from "../components/NavHeader";
   import WebSocket from "../components/WebSocket";
-  import UserEventChart from "../components/UserEventChart";
+  import UserEventSumChart from "../components/UserEventSumChart";
+  import UserEventOneChart from "../components/UserEventOneChart";
 
   export default {
     mounted() {
@@ -49,15 +51,16 @@
         collapsed: false,
         theme: 'dark',
         selectedKeys: [],
-        breadcrumb: ["User","user list"],
-        showTab: 'user list',
+        breadcrumb: [],
+        showTab: 'user list one',
       };
     },
     components: {
       NavHeader,
       UserList,
       WebSocket,
-      UserEventChart,
+      UserEventSumChart,
+      UserEventOneChart,
     },
     methods: {
       setSelectedKeys(value) {

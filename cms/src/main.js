@@ -7,9 +7,7 @@ import Antd from 'ant-design-vue'
 import VueCookie from 'vue-cookie'
 import axios from 'axios'
 import 'ant-design-vue/dist/antd.css'
-import VeLine from 'v-charts/lib/line.common';
-import VeMap from 'v-charts/lib/map.common';
-import VeScatter from 'v-charts/lib/scatter.common';
+import VeHistogram from 'v-charts/lib/histogram.common';
 // 下面的依赖可以按照需求选择性加载
 // The following dependencies can be selectively loaded on demand
 import 'echarts/lib/component/markLine';
@@ -22,7 +20,7 @@ import 'echarts/lib/component/title';
 import 'zrender/lib/svg/svg';
 import 'v-charts/lib/style.css';
 
-[VeLine, VeMap, VeScatter].forEach(comp => {
+[VeHistogram].forEach(comp => {
   Vue.component(comp.name, comp);
 });
 
