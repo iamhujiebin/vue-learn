@@ -22,7 +22,6 @@
         </a-breadcrumb>
         <user-list v-show="showTab==='user list'"></user-list>
         <web-socket v-show="showTab==='websocket'"></web-socket>
-        <user-event-sum-chart v-show="showTab==='user event sum'"></user-event-sum-chart>
         <user-event-one-chart v-show="showTab==='user event one'"></user-event-one-chart>
       </a-layout-content>
       <a-layout-footer style="text-align: center">
@@ -68,6 +67,9 @@
         let pi = value.split("-")[0];
         this.breadcrumb = [this.sidebarNameMap[pi], this.sidebarNameMap[value]];
         this.showTab = this.sidebarNameMap[value];
+        if (this.showTab === "user event sum"){
+          this.$router.push("/chart").then().catch(error=>{alert(error)})
+        }
         console.log(this.breadcrumb)
       },
       getSideBar() {

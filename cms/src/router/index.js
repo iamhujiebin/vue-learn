@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from './../views/Layout'
 import Login from './../views/login'
+import Chart from './../components/UserEventSumChart'
 
 Vue.use(Router)
 
@@ -20,5 +21,9 @@ export default new Router({
       path:"/login",
       component:Login,
     },
+    {
+      path:"/chart",
+      component:Chart,
+    }
   ]
 })

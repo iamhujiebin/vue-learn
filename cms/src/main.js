@@ -8,6 +8,7 @@ import VueCookie from 'vue-cookie'
 import axios from 'axios'
 import 'ant-design-vue/dist/antd.css'
 import VeHistogram from 'v-charts/lib/histogram.common';
+import VePie from 'v-charts/lib/pie.common';
 // 下面的依赖可以按照需求选择性加载
 // The following dependencies can be selectively loaded on demand
 import 'echarts/lib/component/markLine';
@@ -20,7 +21,7 @@ import 'echarts/lib/component/title';
 import 'zrender/lib/svg/svg';
 import 'v-charts/lib/style.css';
 
-[VeHistogram].forEach(comp => {
+[VeHistogram,VePie].forEach(comp => {
   Vue.component(comp.name, comp);
 });
 
