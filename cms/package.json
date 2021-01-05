@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "ant-design-vue": "^1.4.11",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "echarts": "^4.6.0",
     "moment": "^2.24.0",
     "v-charts": "^1.19.0",
